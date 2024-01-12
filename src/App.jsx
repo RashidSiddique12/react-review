@@ -9,7 +9,7 @@ function App() {
   const [des, setDes] = useState();
   const [amount, setAmout] = useState();
   const [item, setItem] = useState();
-  // const [isEdit, setIsEdit] = useState(false);
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,11 +25,11 @@ function App() {
   };
 
   const handleEdit = (id) => {
-    console.log(des);
+    // console.log(des);
     setData(
       data.map((itm) => {
         if (itm.id == id) {
-          return { ...itm, des: des, amount: amount, item: item };
+          return { ...itm, des: (des? des : itm.des), amount: (amount ? amount : itm.amount), item: (item? item : itm.item )};
         } else {
           return itm;
         }
