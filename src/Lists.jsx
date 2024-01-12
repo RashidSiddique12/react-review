@@ -4,8 +4,11 @@ function Lists({ des, item, amount, handleDelete, handleEdit }) {
   const [isEdit, setIsEdit] = useState(false);
   return (
     <div>
-      <li>
-        {des} {item} {amount} <button onClick={handleDelete}>delete</button>
+      
+       <p>Description :{des} </p>
+       <p>Amount :  {amount}</p>
+       <p>Item :{item}  </p> 
+      <button onClick={handleDelete}>delete</button>
         {isEdit ? (
           <button onClick={() => {
               handleEdit();
@@ -18,7 +21,7 @@ function Lists({ des, item, amount, handleDelete, handleEdit }) {
             Edit
           </button>
         )}
-      </li>
+      
     </div>
   );
 }
