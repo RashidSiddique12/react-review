@@ -92,5 +92,5 @@ function App() {
   );
 }
 
-// onClick={(setShow("cloth"))}
+
 export default App;
