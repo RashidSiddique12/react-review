@@ -7,9 +7,12 @@ function App() {
   const [data, setData] = useState([
     { id: 1, des: "made of coton", amount: 500, item: "cloth" },
   ]);
+
   const [des, setDes] = useState();
   const [amount, setAmout] = useState();
   const [item, setItem] = useState();
+  const [isEdit, setIsEdit] = useState(false);
+  const [updateId, setUpdateId] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,23 +27,28 @@ function App() {
     setData(data.filter((item) => item.id !== id));
   };
 
-  const handleEdit = (id) => {
-    // console.log(des);
+  const handleEdit = (id, des, item, amount) => {
+    setUpdateId(id);
+    setDes(des);
+    setAmout(amount);
+    setItem(item);
+    setIsEdit(true);
+  };
+
+  const hnadleUpdate = (e) => {
+    e.preventDefault();
     setData(
-      data.map((itm) => {
-        if (itm.id == id) {
-          return {
-            ...itm,
-            des: des ? des : itm.des,
-            amount: amount ? amount : itm.amount,
-            item: item ? item : itm.item,
-          };
+      data.map((d) => {
+        if (d.id === updateId) {
+          return { id: d.id, des: des, amount: amount, item: item };
         } else {
-          return itm;
+          return d;
         }
       })
     );
 
+    setUpdateId("");
+    setIsEdit(false);
     setDes("");
     setAmout("");
     setItem("");
@@ -48,7 +56,7 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={isEdit ? hnadleUpdate : handleSubmit}>
         Description:{" "}
         <input
           type="text"
@@ -74,7 +82,11 @@ function App() {
           <option value="Jeans">Jeans</option>
         </select>
         <br />
-        <button type="submit">submit</button>
+        {isEdit ? (
+          <button type="submit">Update</button>
+        ) : (
+          <button type="submit">submit</button>
+        )}
       </form>
       <br />
       <br />
@@ -85,16 +97,10 @@ function App() {
             item={item}
             amount={amount}
             handleDelete={() => handleDelete(id)}
-            handleEdit={() => handleEdit(id)}
+            handleEdit={() => handleEdit(id, des, item, amount)}
           />
         </div>
       ))}
-
-      <p>
-        Note : If you want to edit, Click the Edit Button and fill the form and then click on update button
-      </p>
-      <br />
-      <br />
     </div>
   );
 }
